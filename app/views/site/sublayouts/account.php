@@ -1,0 +1,2 @@
+x
+<?php echo $body; ?>

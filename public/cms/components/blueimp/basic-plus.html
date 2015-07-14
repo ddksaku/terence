@@ -1,0 +1,455 @@
+<!DOCTYPE HTML>
+<!--
+/*
+ * jQuery File Upload Plugin Basic Plus Demo 1.0
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+-->
+<html lang="en">
+<head>
+<!-- Force latest IE rendering engine or ChromeFrame if installed -->
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+<meta charset="utf-8">
+<title>jQuery File Upload Demo - Basic Plus version</title>
+<meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap CSS Toolkit styles -->
+<link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap.min.css">
+<!-- Generic page styles -->
+<link rel="stylesheet" href="css/style.css">
+<!-- Bootstrap styles for responsive website layout, supporting different screen sizes -->
+<link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-responsive.min.css">
+<!-- Bootstrap CSS fixes for IE6 -->
+<!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+
+
+
+
+<style type="text/css">
+
+
+
+.preview-holder{
+
+    width:100px;
+	height:120px;
+	position:relative;
+	
+
+}
+
+
+
+.preview-holder canvas{
+	
+	
+	border:1px solid #CCC;
+
+
+}
+
+.preview-holder .delete-images{
+
+    position:absolute;
+	top:3px;
+	right:1px;
+	display:inline-block;
+	padding:5px;
+	padding-top:0px;
+	padding-bottom:0px;
+	background-color:#333;
+	height:1.3em;
+	line-height:1.1em;
+	cursor:pointer;
+	color:#FFF;
+
+}
+
+
+.preview-holder .delete-images:hover{
+
+    background-color:#4D4D4D;
+
+}
+
+.preview-holder .img-preview{
+
+    margin-bottom:0px;
+
+}
+
+
+
+
+.preview-holder .progress{
+
+    height:10px;
+	-moz-border-radius:0px;
+	-webkit-border-radius:0px;
+	border-radius:0px;
+	border:1px solid #CCC;
+	
+
+}
+
+
+
+.file-dummy-input{
+
+
+    position:relative;
+	overflow:hidden;
+	cursor:pointer;
+	width:255px;
+	margin-bottom:10px;
+	
+
+
+}
+
+
+.file-dummy-input .dummy-input{
+
+
+    border:1px solid #CCC;
+	padding:5px;
+	padding-left:7px;
+	height:20px;
+	width:200px;
+	color:#CCC !important;
+	float:left;
+
+
+}
+
+
+.file-dummy-input .file-add-on{
+
+
+    padding:0;
+	height:30px;
+	width:35px;
+	background-color:#CCC;
+	
+	-webkit-border-radius:0 !important;
+	-moz-border-radius:0 !important;
+	border-radius:0 !important;
+	border:1px solid #CCC;
+	border-left:none;
+	float:left;
+
+
+}
+
+
+
+.file-dummy-input .add-on img{
+
+
+
+
+
+}
+
+
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+   
+ 
+    
+    
+<!-- Upload Button --> 
+<div id="file-upload-holder" class="section">
+    <label>Image<small>Upload an image</small></label>   
+    <div> 
+    
+        <div id="choose-file" class="file-dummy-input" style="display:none;">
+            <div class="dummy-input">Choose Image</div>
+            <div class="file-add-on"><img src="../../images/addFiles.png" width="36" height="30" ></div>
+        </div>
+        
+        
+        
+        <input id="fileupload" type="file" class="fileupload" name="files[]" style="display:none;">
+        
+        <div class="preview-holder">
+            <!-- The container for the uploaded files -->
+            <div id="files">
+            
+            <div class="img-preview-holder">
+                <p class="img-preview">
+                    <img src="server/php/files/square/rfndmdawnzcuslbh62.jpg" width="100" height="100">
+                </p>
+                    <span class="delete-images" style="display: none;">x</span>
+                </div>
+            </div>
+            
+            
+            <!-- The global progress bar -->
+            <div id="progress" class="progress progress-success progress-striped active" style="display:none;">
+                <div class="bar"></div>
+            </div>
+        </div>
+        
+        
+        
+        <input id="imagefile" name="imagefile"  type="text" value="" style="display:none">
+        
+        
+    </div>
+</div>
+<!-- Upload Button End --> 
+
+    
+    
+   
+   
+   
+   
+   
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script src="js/load-image.min.js"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+<script src="js/canvas-to-blob.min.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="js/jquery.fileupload.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="js/jquery.fileupload-process.js"></script>
+<!-- The File Upload image resize plugin -->
+<script src="js/jquery.fileupload-resize.js"></script>
+<!-- The File Upload validation plugin -->
+<script src="js/jquery.fileupload-validate.js"></script>
+<script>
+/*jslint unparam: true */
+/*global window, $ */
+$(function () {
+    'use strict';
+	
+	
+	//Dummy file click
+	$('#choose-file').click(function(){
+	
+	    $('#fileupload').click();
+	
+	
+	});
+	
+	
+    // Change this to the location of your server-side upload handler:
+    var url = 'http://localhost/james/admin/components/blueimp/server/php/upload_news_image.php';
+    var uploadButton = $('<button/>')
+            .addClass('btn')
+            .prop('disabled', true)
+            .text('Processing...')
+            .on('click', function () {
+                var $this = $(this),
+                    data = $this.data();
+                $this
+                    .off('click')
+                    .text('Abort')
+                    .on('click', function () {
+                        $this.remove();
+                        data.abort();
+                    });
+                data.submit().always(function () {
+                    $this.remove();
+                });
+            });
+	
+	
+	//Delete Button
+	$('.delete-images').on('click', function(){
+			
+			   $(this).parent().remove();
+			   
+			   
+			   $('.progress').hide();
+			   
+			   
+			   $('#progress .bar').css(
+					'width',
+					'0%'
+				);
+				
+				//Show file selector
+				$('#choose-file').fadeIn('fast');
+				
+				
+			
+	}).hide();
+			
+	//Show delete button on hover
+	$('.delete-images').parent().on('mouseover',function(){  $(this).find('.delete-images').show();  }).on('mouseout',function(){  $(this).find('.delete-images').hide();  });
+			
+			
+			
+			
+	
+			
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        autoUpload: true,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        maxFileSize: 2000000, // 2 MB
+        loadImageMaxFileSize: 15000000, // 15MB
+        disableImageResize: false,
+        previewMaxWidth: 100,
+        previewMaxHeight: 100,
+        previewCrop: true,
+		singleFileUploads:true
+    }).on('fileuploadadd', function (e, data) {
+		
+		//Hide file seletor
+		$('#choose-file').hide();
+		
+		$('.progress').show();
+		
+		//Reset progress
+		$('#progress .bar').css('width','0%');
+			
+		//Remove previous
+		$('.img-preview-holder').remove();
+		
+		
+        data.context = $('<div class="img-preview-holder"></div>').appendTo('#files');
+		
+		
+        $.each(data.files, function (index, file) {
+			
+			
+			
+			
+			//Create preview
+            var node = $('<p class="img-preview"></p>');
+            node.appendTo(data.context);
+			
+			
+        });
+		
+		
+		
+    }).on('fileuploadprocessalways', function (e, data) {
+		
+		
+		
+		
+        var index = data.index,
+            file = data.files[index],
+            node = $(data.context.children()[index]);
+        if (file.preview) {
+            node
+                .prepend('<br>')
+                .prepend(file.preview);
+        }
+        if (file.error) {
+            node
+                .append('<br>')
+                .append(file.error);
+        }
+        if (index + 1 === data.files.length) {
+            data.context.find('button')
+                .text('Upload')
+                .prop('disabled', !!data.files.error);
+        }
+		
+		
+		
+		
+    }).on('fileuploadprogressall', function (e, data) {
+		
+		
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress .bar').css(
+            'width',
+            progress + '%'
+        );
+		
+		if(progress > 99){
+		
+		    $('.progress').hide();
+			
+		}
+		
+		
+    }).on('fileuploaddone', function (e, data) {
+		
+		
+        $.each(data.result.files, function (index, file) {
+			
+			
+            var link = $('<a>').attr('target', '_blank').prop('href', file.url);
+				
+				
+		    //Create delete button
+			var deleteBTN = $('<span class="delete-images">x</span>');
+			
+			
+			//Delete button functionality
+			deleteBTN.appendTo(data.context);
+			
+				//Delete Button
+			   deleteBTN.appendTo(data.context).on('click', function(){
+				
+			   deleteBTN.parent().remove();
+			   
+			   
+			   $('.progress').hide();
+			   
+			   
+			   $('#progress .bar').css(
+					'width',
+					'0%'
+				);
+				
+				
+				
+				//Show file seletor
+		        $('#choose-file').fadeIn('fast');
+				
+			
+	         }).hide();
+			
+	       //Show delete button on hover
+	       deleteBTN.parent().on('mouseover',function(){  deleteBTN.show();  }).on('mouseout',function(){ deleteBTN.hide();  });
+			
+		
+			
+		    //Set filename
+		   $('#imagefile').val(file.name);
+				
+				
+       });
+		
+		
+    }).on('fileuploadfail', function (e, data) {
+        $.each(data.result.files, function (index, file) {
+            var error = $('<span/>').text(file.error);
+            $(data.context.children()[index])
+                .append('<br>')
+                .append(error);
+        });
+    });
+});
+</script>
+</body> 
+</html>

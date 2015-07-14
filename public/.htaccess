@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+	Options -MultiViews
+	RewriteEngine On
+
+        DirectorySlash Off
+
+        RewriteCond %{THE_REQUEST} ^(.*)(/index\.php)$
+        RewriteRule ^ http://%{HTTP_HOST}/ [R=301,L]
+
+        RewriteCond %{HTTP_HOST} ^terence.synergy.je
+        RewriteCond %{THE_REQUEST} index\.php
+        RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/ [R=301,L]
+
+        RewriteCond %{HTTP_HOST} ^terence.synergy.je
+        RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^ index.php [L]
+
+        RewriteCond %{REQUEST_FILENAME} ^index.php
+        RewriteRule ^ / [R=301,L]
+
+</IfModule>

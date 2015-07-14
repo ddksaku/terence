@@ -1,0 +1,28 @@
+#header, #content, #footer, #upper-section{
+	width:1250px;
+	margin:0 auto;
+	border:none;
+}
+.topbar{
+	width:1250px;
+}
+.nav-wrap{
+	width:1250px;
+}
+.body-wrapper{
+	width:1250px;
+	margin:0 auto;
+	float:none;
+	background:#FFF;
+}
+@media (max-width: 1250px) {
+
+#header, #content, #footer, #upper-section, .body-wrapper{
+	border:none;
+	width:100%;
+}
+.topbar, .nav-wrap{
+	width:100%;
+}
+
+}

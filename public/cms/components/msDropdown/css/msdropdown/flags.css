@@ -1,0 +1,103 @@
+
+
+.dd{
+	display: inline-block;
+    width: 110px;
+	background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+    color: #000000;
+    cursor: default;
+    display: inline-block;
+    line-height: 25px;
+    max-width: 75px;
+    outline: medium none;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    vertical-align: middle;
+	height:38px;
+	
+}
+
+
+.dd .ddTitleText{
+
+  display:inline-block;
+  width:52px;
+  height:18px;
+  padding-top:5px;
+  text-align:center;
+
+}
+
+
+.dd .arrow{   
+    background: url("../../../../images/selectBox-arrow.gif") no-repeat scroll 50% center transparent;
+    border-left: 1px solid #DDDDDD;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 23px;
+}
+
+.dd .ddChild{
+	
+	background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    max-height: 150px;
+	height:150px;
+    min-height: 150px;
+    overflow-y: scroll !important;
+	width:75px;
+	margin-left:-1px;
+	
+}
+
+.dd .ddChild ul{
+
+
+}
+
+
+.dd .ddChild ul li{
+
+    line-height: 1.5;
+    overflow: hidden;
+    padding-top:5px;
+	padding-bottom:5px;
+	cursor: default;
+	color: #1F92FF;
+	text-align:center;
+
+}
+
+
+.dd .ddChild ul li:hover{
+
+   background-color:#EEEEEE;
+
+
+
+}
+
+.dd .ddChild ul li.selected{
+
+    background-color:#C8DEF4;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

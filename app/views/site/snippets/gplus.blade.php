@@ -1,0 +1,1 @@
+<div class="g-plusone" data-href="{{ \Request::url() }}" data-size="medium" data-annotation="none"></div>

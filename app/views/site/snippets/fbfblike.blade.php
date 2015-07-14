@@ -1,0 +1,1 @@
+<div class="fb-like" data-href="https://www.facebook.com/{{ $settings->setting_facebook }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
